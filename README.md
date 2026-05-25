@@ -1,47 +1,117 @@
 # DEVILAPE_CYBERDECK
 
-ESP32-powered cyberdeck interface featuring a tactical TFT UI, rotary encoder navigation, WiFi/BLE monitoring tools, packet visualization, and animated system telemetry.
+ESP32-powered cyberdeck interface featuring a tactical TFT UI, rotary encoder navigation, WiFi/BLE monitoring tools, packet visualization, radar scanning, animated telemetry, and embedded cyberpunk-inspired diagnostics.
 
 ---
 
-## Overview
+# Overview
 
-DEVILAPE_CYBERDECK is a standalone ESP32 cyberdeck interface designed around a TFT display and rotary encoder control system.
+DEVILAPE_CYBERDECK is a standalone ESP32 cyberdeck project built around a 240x320 ST7789 TFT display and rotary encoder control system.
 
 The project combines:
-- Real-time WiFi analysis
-- BLE device scanning
-- Packet monitoring
-- Deauthentication detection
-- Beacon frame simulation
-- Radar-style signal visualization
-- Animated telemetry dashboards
-- System logging
+
+* Real-time WiFi analysis
+* BLE device scanning
+* Packet monitoring
+* Deauthentication detection
+* Beacon frame simulation
+* Radar-style signal visualization
+* Animated telemetry dashboards
+* System logging
 
 The interface is fully menu-driven and optimized for embedded hardware aesthetics.
 
 ---
 
-## Hardware Used
+# Features
 
-### Core Components
-- ESP32 Dev Module
-- TFT Display (TFT_eSPI compatible)
-- Rotary Encoder
-- Passive Buzzer
+## Spectrum Analyzer
 
-### Pin Configuration
+Visualizes nearby WiFi activity across channels using animated bar graphs.
 
-| Component | GPIO |
-|---|---|
-| Buzzer | 22 |
-| Encoder CLK | 34 |
-| Encoder DT | 35 |
-| Encoder SW | 21 |
+## Packet Monitor
+
+Captures WiFi management packets in promiscuous mode with live traffic visualization.
+
+## Cyber Core Telemetry
+
+Displays simulated network diagnostics and cyberdeck telemetry.
+
+## Radar Scan
+
+Animated radar-style signal scanner using RSSI values.
+
+## BLE Capture
+
+Scans and displays nearby BLE devices and addresses.
+
+## Net Runner
+
+WiFi network browser with RSSI and channel information.
+
+## Deauth Sniffer
+
+Detects deauthentication/disassociation packets with threat alerts.
+
+## Beacon Flood Simulator
+
+Broadcasts rotating custom SSIDs using raw beacon frames.
+
+## System Logs
+
+Embedded rolling event logger for system activity and alerts.
 
 ---
 
-## Libraries Used
+# Hardware Used
+
+## Core Components
+
+* ESP32 Dev Module
+* ST7789 240x320 TFT Display
+* Rotary Encoder
+* Passive Buzzer
+
+---
+
+# TFT Wiring
+
+| TFT Pin    | ESP32 GPIO |
+| ---------- | ---------- |
+| VCC        | 3.3V       |
+| GND        | GND        |
+| SCK / CLK  | GPIO 18    |
+| SDA / MOSI | GPIO 23    |
+| MISO       | GPIO 19    |
+| CS         | GPIO 5     |
+| DC         | GPIO 2     |
+| RST        | GPIO 4     |
+| BL / LED   | 3.3V       |
+
+---
+
+# Rotary Encoder Wiring
+
+| Encoder Pin | ESP32 GPIO |
+| ----------- | ---------- |
+| CLK         | GPIO 34    |
+| DT          | GPIO 35    |
+| SW          | GPIO 21    |
+| +           | 3.3V       |
+| GND         | GND        |
+
+---
+
+# Buzzer Wiring
+
+| Buzzer Pin | ESP32 GPIO |
+| ---------- | ---------- |
+| +          | GPIO 22    |
+| -          | GND        |
+
+---
+
+# Libraries Used
 
 ```cpp
 #include <TFT_eSPI.h>
@@ -49,226 +119,119 @@ The interface is fully menu-driven and optimized for embedded hardware aesthetic
 #include "AiEsp32RotaryEncoder.h"
 #include "esp_wifi.h"
 #include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEScan.h>
+#include <BLEAdvertisedDevice.h>
 ```
 
 Required libraries:
-- TFT_eSPI
-- AiEsp32RotaryEncoder
-- ESP32 WiFi
-- ESP32 BLE Arduino
+
+* TFT_eSPI
+* AiEsp32RotaryEncoder
+* ESP32 WiFi
+* ESP32 BLE Arduino
 
 ---
 
-## Features
+# Controls
 
-## 1. Spectrum Analyzer
-
-Visualizes nearby WiFi activity across channels using animated bar graphs.
-
-### Displays:
-- WiFi channel usage
-- Signal distribution
-- Real-time scan updates
+| Action         | Function          |
+| -------------- | ----------------- |
+| Rotate Encoder | Navigate menus    |
+| Press Encoder  | Enter / Exit mode |
 
 ---
 
-## 2. Packet Monitor
+# TFT_eSPI Setup
 
-Monitors captured WiFi management packets in promiscuous mode.
+This project requires custom TFT_eSPI configuration.
 
-### Includes:
-- Live traffic graph
-- Surge detection
-- Audible alert system
-- Historical packet visualization
+See:
 
----
-
-## 3. Cyber Core Telemetry
-
-Displays system diagnostics and simulated telemetry.
-
-### Metrics:
-- Connected node
-- Ping RTT
-- Packet loss
-- Upload/download estimates
-- Status indicators
-
----
-
-## 4. Radar Scan
-
-Animated radar-style interface showing signal intensity.
-
-### Features:
-- Rotating radar sweep
-- RSSI visualization
-- Dynamic scanning animation
-
----
-
-## 5. BLE Capture
-
-Scans and displays nearby BLE devices.
-
-### Displays:
-- Device names
-- MAC addresses
-- Signal strength references
-
----
-
-## 6. Net Runner
-
-WiFi network browser interface.
-
-### Displays:
-- SSIDs
-- Channels
-- RSSI values
-- Scrollable network list
-
----
-
-## 7. Deauth Sniffer
-
-Detects WiFi deauthentication/disassociation frames.
-
-### Features:
-- Channel hopping
-- Packet counting
-- Threat detection alerts
-- Last detected MAC target
-- Real-time monitoring
-
----
-
-## 8. Beacon Flood Simulator
-
-Generates custom beacon frames using rotating SSID names.
-
-### Included SSIDs:
-- X_HACKED_X
-- SYSTEM_FAIL
-- VOID_SIG
-- ROOT_ACCESS
-- SQL_INJECT
-- CYBER_PUNK
-
-### Notes
-This mode is intended for controlled lab/testing environments only.
-
----
-
-## 9. System Logs
-
-Embedded rolling event logger.
-
-### Logs:
-- Boot events
-- Scan activity
-- Alerts
-- Start/stop actions
-- Threat notifications
-
----
-
-## Controls
-
-| Action | Function |
-|---|---|
-| Rotate Encoder | Navigate menus |
-| Press Encoder | Enter/Exit mode |
-
----
-
-## UI Design
-
-The interface uses:
-- Yellow/Magenta tactical color palette
-- Animated transitions
-- Cyberpunk-inspired diagnostics
-- Real-time rendering
-- Embedded HUD layout
-
----
-
-## Technical Details
-
-### WiFi Features
-- Promiscuous packet capture
-- Channel hopping
-- Raw 802.11 frame transmission
-- WiFi network scanning
-
-### BLE Features
-- BLE device discovery
-- Device metadata collection
-
-### Display Features
-- Real-time graph rendering
-- Dynamic UI refresh
-- Animated radar sweep
-- TFT_eSPI acceleration
-
----
-
-## Boot Sequence
-
-The device performs:
-1. TFT initialization
-2. Rotary encoder setup
-3. WiFi initialization
-4. BLE initialization
-5. Audio startup tones
-6. Animated boot screen
-
----
-
-## Lessons Learned
-
-- Efficient TFT rendering matters on ESP32
-- Partial screen redraws improve responsiveness
-- Promiscuous mode handling requires careful timing
-- Rotary encoder input debouncing is important
-- Embedded UI design benefits from persistent state systems
-
----
-
-## Future Improvements
-
-- SD card logging
-- Battery monitoring
-- GPS integration
-- OLED secondary display
-- RF analysis expansion
-- Custom enclosure
-- Audio spectrum visualization
-
----
-
-## Media
-
-Add project photos, wiring diagrams, and demo videos here.
-
-Example:
 ```text
-/images/cyberdeck_front.jpg
-/images/ui_demo.jpg
-/images/wiring.png
+TFT_SETUP.md
+```
+
+for the complete User_Setup.h configuration.
+
+---
+
+# User Interface
+
+The UI includes:
+
+* Tactical yellow/magenta color palette
+* Animated radar sweep
+* Real-time graphs
+* Dynamic telemetry
+* Cyberpunk HUD styling
+* Embedded audio feedback
+
+---
+
+# Technical Features
+
+## WiFi Features
+
+* Promiscuous packet capture
+* Channel hopping
+* Raw 802.11 frame transmission
+* WiFi scanning
+
+## BLE Features
+
+* BLE discovery
+* Device metadata collection
+
+## Display Features
+
+* Real-time graph rendering
+* Dynamic screen refresh
+* Animated UI transitions
+* TFT_eSPI acceleration
+
+---
+
+# Project Structure
+
+```text
+DEVILAPE_CYBERDECK/
+├── DEVILAPE_CYBERDECK.ino
+├── README.md
+├── TFT_SETUP.md
+├── LICENSE
+├── images/
+│   ├── cyberdeck_front.jpg
+│   ├── ui_demo.jpg
+│   ├── wiring.png
+│   └── radar_screen.jpg
 ```
 
 ---
 
-## Disclaimer
+# Media
 
-This project is intended for educational, research, and authorized testing environments only.
-
-Users are responsible for complying with local laws and wireless regulations.
 
 ---
 
-## License
+# Future Improvements
+
+* SD card logging
+* Battery monitoring
+* GPS integration
+* RF analysis expansion
+* Custom enclosure
+
+---
+
+# Disclaimer
+
+This project is intended for educational, research, and authorized testing environments only.
+
+Users are responsible for complying with local wireless regulations and laws.
+
+---
+
+# License
 
 MIT License
