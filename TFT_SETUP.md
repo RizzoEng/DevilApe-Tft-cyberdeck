@@ -35,7 +35,7 @@ Replace the display configuration with the setup below.
 // ESP32 + ST7789 240x320
 // ##############################################################
 
-#define USER_SETUP_INFO "DEVILAPE_CYBERDECK_PARALLEL"
+#define USER_SETUP_INFO "User_Setup"
 
 // ##############################################################
 // DISPLAY DRIVER
