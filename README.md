@@ -74,19 +74,61 @@ Embedded rolling event logger for system activity and alerts.
 
 ---
 
-# TFT Wiring
+# TFT Display Configuration
 
-| TFT Pin    | ESP32 GPIO |
-| ---------- | ---------- |
-| VCC        | 3.3V       |
-| GND        | GND        |
-| SCK / CLK  | GPIO 18    |
-| SDA / MOSI | GPIO 23    |
-| MISO       | GPIO 19    |
-| CS         | GPIO 5     |
-| DC         | GPIO 2     |
-| RST        | GPIO 4     |
-| BL / LED   | 3.3V       |
+This project uses a 240x320 ST7789 TFT display in 8-bit parallel mode with the TFT_eSPI library.
+
+Unlike standard SPI TFT setups, this build uses the ESP32 parallel TFT interface for faster rendering and smoother UI updates.
+
+---
+
+# TFT Parallel Wiring
+
+| TFT Pin | ESP32 GPIO |
+| ------- | ---------- |
+| D0      | GPIO 12    |
+| D1      | GPIO 13    |
+| D2      | GPIO 26    |
+| D3      | GPIO 25    |
+| D4      | GPIO 17    |
+| D5      | GPIO 16    |
+| D6      | GPIO 27    |
+| D7      | GPIO 14    |
+| CS      | GPIO 33    |
+| DC / RS | GPIO 15    |
+| WR      | GPIO 4     |
+| RD      | GPIO 2     |
+| RST     | GPIO 32    |
+| VCC     | 3.3V       |
+| GND     | GND        |
+
+---
+
+# Why Parallel Mode?
+
+The cyberdeck UI performs:
+
+* Real-time graph rendering
+* Radar sweep animation
+* Packet visualization
+* Dynamic telemetry updates
+* Full-screen redraws
+
+Using 8-bit parallel mode significantly improves display speed compared to SPI TFT interfaces.
+
+---
+
+# TFT_eSPI Configuration
+
+The TFT requires custom TFT_eSPI configuration.
+
+See:
+
+```text id="a5wwnz"
+TFT_SETUP.md
+```
+
+for the complete User_Setup.h configuration.
 
 ---
 
