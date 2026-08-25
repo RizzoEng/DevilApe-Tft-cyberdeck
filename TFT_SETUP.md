@@ -1,35 +1,25 @@
 # TFT_eSPI Parallel Configuration
 
-DEVILAPE_CYBERDECK uses a 240x320 ST7789 TFT display connected through the ESP32 8-bit parallel interface using TFT_eSPI.
+DEVILAPE_CYBERDECK uses a 240x320 ST7789 TFT display connected through the ESP32 8-bit parallel interface using `TFT_eSPI`.
 
-This is NOT a standard SPI TFT setup.
-
----
-
-# Library Required
-
-TFT_eSPI by Bodmer
-
-GitHub:
-https://github.com/Bodmer/TFT_eSPI
+This is **NOT** a standard SPI TFT setup.
 
 ---
 
-# Open User_Setup.h
+## Library Required
 
-Open:
+* **Library:** `TFT_eSPI` by Bodmer
+* **GitHub Repository:** https://github.com/Bodmer/TFT_eSPI
 
-```text id="rq7h8o"
+---
+
+## Configuration File Path
+
+Open the setup file located at:
+
+```text
 Documents/Arduino/libraries/TFT_eSPI/User_Setup.h
-```
 
-Replace the display configuration with the setup below.
-
----
-
-# DEVILAPE_CYBERDECK User_Setup.h
-
-```cpp id="qwv1h8"
 // ##############################################################
 // DEVILAPE_CYBERDECK PARALLEL TFT CONFIG
 // ESP32 + ST7789 240x320
@@ -105,107 +95,8 @@ Replace the display configuration with the setup below.
 
 #define SPI_FREQUENCY       27000000
 #define SPI_READ_FREQUENCY  20000000
-#define SPI_TOUCH_FREQUENCY 2500000
+#define SPI_TOUCH_FREQUENCY  2500000
 
 // ##############################################################
 // END CONFIG
 // ##############################################################
-```
-
----
-
-# Parallel TFT Wiring
-
-| TFT Pin | ESP32 GPIO |
-| ------- | ---------- |
-| D0      | GPIO 12    |
-| D1      | GPIO 13    |
-| D2      | GPIO 26    |
-| D3      | GPIO 25    |
-| D4      | GPIO 17    |
-| D5      | GPIO 16    |
-| D6      | GPIO 27    |
-| D7      | GPIO 14    |
-| CS      | GPIO 33    |
-| DC      | GPIO 15    |
-| WR      | GPIO 4     |
-| RD      | GPIO 2     |
-| RST     | GPIO 32    |
-| VCC     | 3.3V       |
-| GND     | GND        |
-
----
-
-# Important Notes
-
-* This project uses 8-bit parallel TFT mode.
-* Do NOT use SPI pin definitions.
-* Only ONE display driver should be enabled.
-* Comment out all unused drivers.
-* Recompile after editing User_Setup.h.
-
----
-
-# Tested Hardware
-
-* ESP32 Dev Module
-* ST7789 240x320 TFT
-* TFT_eSPI Library
-* Arduino IDE
-
----
-
-# Troubleshooting
-
-## White Screen
-
-* Verify parallel data pins
-* Check TFT_RST wiring
-* Confirm ST7789 driver enabled
-
-## Wrong Colors
-
-Try:
-
-```cpp id="1o86e4"
-#define TFT_RGB_ORDER TFT_BGR
-```
-
-instead of:
-
-```cpp id="n2rxmo"
-#define TFT_RGB_ORDER TFT_RGB
-```
-
-## Mirrored or Inverted Display
-
-Try:
-
-```cpp id="gb3u68"
-#define TFT_INVERSION_ON
-```
-
-or:
-
-```cpp id="4hqlfv"
-#define TFT_INVERSION_OFF
-```
-
-depending on the panel revision.
-
----
-
-# Verify Setup
-
-Run:
-
-```text id="5n6oyg"
-File → Examples → TFT_eSPI → Read_User_Setup
-```
-
-Verify:
-
-* ST7789 driver
-* 240x320 resolution
-* Parallel mode enabled
-* Correct GPIO assignments
